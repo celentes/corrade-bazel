@@ -30,9 +30,11 @@ load(
     "corrade_dynamic_plugin",
 )
 
+CURRENT_DIR = "@corrade_src//:src/Corrade/PluginManager/Test/"
+
 corrade_configure_header(
     name = "configure",
-    src = "configure.h.cmake",
+    src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     defines = {
         "PLUGINS_DIR": "plugins",
@@ -51,62 +53,62 @@ corrade_configure_header(
 
 corrade_static_plugin(
     name = "CustomSuffixStatic",
-    metadata_file = "custom-suffix/CustomSuffixStatic.modconf",
+    metadata_file = CURRENT_DIR + "custom-suffix/CustomSuffixStatic.modconf",
     srcs = [
-        "custom-suffix/CustomSuffixStatic.cpp",
+        CURRENT_DIR + "custom-suffix/CustomSuffixStatic.cpp",
         "//src/Corrade/PluginManager:PluginManagerTestLib",
     ],
     hdrs = [
-        "AbstractCustomSuffix.h",
+        CURRENT_DIR + "AbstractCustomSuffix.h",
     ],
 )
 
 corrade_static_plugin(
     name = "DisabledMetadataStatic",
     srcs = [
-        "disabled-metadata/DisabledMetadataStatic.cpp",
+        CURRENT_DIR + "disabled-metadata/DisabledMetadataStatic.cpp",
         "//src/Corrade/PluginManager:PluginManagerTestLib",
     ],
     hdrs = [
-        "AbstractDisabledMetadata.h",
+        CURRENT_DIR + "AbstractDisabledMetadata.h",
     ],
 )
 
 corrade_static_plugin(
     name = "Canary",
-    metadata_file = "animals/Canary.conf",
+    metadata_file = CURRENT_DIR + "animals/Canary.conf",
     srcs = [
-        "animals/Canary.cpp",
+        CURRENT_DIR + "animals/Canary.cpp",
         "//src/Corrade/PluginManager:PluginManagerTestLib",
     ],
     hdrs = [
-        "animals/Canary.h",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "animals/Canary.h",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     copts = ["-fPIC"],
 )
 
 corrade_static_plugin(
     name = "Dird",
-    metadata_file = "animals/Dird.conf",
+    metadata_file = CURRENT_DIR + "animals/Dird.conf",
     srcs = [
-        "animals/Dird.cpp",
+        CURRENT_DIR + "animals/Dird.cpp",
         "//src/Corrade/PluginManager:PluginManagerTestLib",
     ],
     hdrs = [
-        "AbstractAnimal.h",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
 )
 
 corrade_static_plugin(
     name = "InitFiniStatic",
-    metadata_file = "dummy.conf",
+    metadata_file = CURRENT_DIR + "dummy.conf",
     srcs = [
-        "init-fini/InitFiniStatic.cpp",
+        CURRENT_DIR + "init-fini/InitFiniStatic.cpp",
     ],
     hdrs = [
-        "init-fini/InitFiniStatic.h",
-        "init-fini/InitFini.h",
+        CURRENT_DIR + "init-fini/InitFiniStatic.h",
+        CURRENT_DIR + "init-fini/InitFini.h",
     ],
     deps = [
         ":configure",
@@ -115,12 +117,12 @@ corrade_static_plugin(
 
 [corrade_dynamic_plugin(
     name = "%s" % dog,
-    metadata_file = "animals/%s.conf" % dog,
+    metadata_file = CURRENT_DIR + "animals/%s.conf" % dog,
     subdir = "plugins/animals",
     srcs = [
-        "animals/%s.cpp" % dog,
-        "animals/Dog.h",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "animals/%s.cpp" % dog,
+        CURRENT_DIR + "animals/Dog.h",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     deps = ["//src/Corrade/PluginManager:PluginManagerTestLib"],
 )
@@ -132,33 +134,33 @@ for dog in [
 
 corrade_dynamic_plugin(
     name = "Snail",
-    metadata_file = "animals/Snail.conf",
+    metadata_file = CURRENT_DIR + "animals/Snail.conf",
     subdir = "plugins/animals",
     srcs = [
-        "animals/Snail.cpp",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "animals/Snail.cpp",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     deps = ["//src/Corrade/PluginManager:PluginManagerTestLib"],
 )
 
 corrade_dynamic_plugin(
     name = "CustomSuffix",
-    metadata_file = "custom-suffix/CustomSuffix.modconf",
+    metadata_file = CURRENT_DIR + "custom-suffix/CustomSuffix.modconf",
     subdir = "plugins/custom-suffix",
     srcs = [
-        "custom-suffix/CustomSuffix.cpp",
-        "AbstractCustomSuffix.h",
+        CURRENT_DIR + "custom-suffix/CustomSuffix.cpp",
+        CURRENT_DIR + "AbstractCustomSuffix.h",
     ],
     override_suffix = "mod",
 )
 
 corrade_dynamic_plugin(
     name = "Deletable",
-    metadata_file = "deletable/Deletable.conf",
+    metadata_file = CURRENT_DIR + "deletable/Deletable.conf",
     subdir = "plugins/deletable",
     srcs = [
-        "deletable/Deletable.cpp",
-        "AbstractDeletable.h",
+        CURRENT_DIR + "deletable/Deletable.cpp",
+        CURRENT_DIR + "AbstractDeletable.h",
     ],
 )
 
@@ -166,31 +168,31 @@ corrade_dynamic_plugin(
     name = "DisabledMetadata",
     subdir = "plugins/disabled-metadata",
     srcs = [
-        "disabled-metadata/DisabledMetadata.cpp",
-        "AbstractDisabledMetadata.h",
+        CURRENT_DIR + "disabled-metadata/DisabledMetadata.cpp",
+        CURRENT_DIR + "AbstractDisabledMetadata.h",
     ],
 )
 
 corrade_dynamic_plugin(
     name = "Doggo",
-    metadata_file = "doggo/Doggo.conf",
+    metadata_file = CURRENT_DIR + "doggo/Doggo.conf",
     subdir = "plugins/doggo",
     srcs = [
-        "doggo/Doggo.cpp",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "doggo/Doggo.cpp",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     deps = ["//src/Corrade/PluginManager:PluginManagerTestLib"],
 )
 
 [corrade_dynamic_plugin(
     name = "%s" % food,
-    metadata_file = "food/%s.conf" % food,
+    metadata_file = CURRENT_DIR + "food/%s.conf" % food,
     subdir = "plugins/food",
     srcs = [
-        "food/HotDog.cpp",
-        "animals/Dog.h",
-        "AbstractAnimal.h",
-        "AbstractFood.h",
+        CURRENT_DIR + "food/HotDog.cpp",
+        CURRENT_DIR + "animals/Dog.h",
+        CURRENT_DIR + "AbstractAnimal.h",
+        CURRENT_DIR + "AbstractFood.h",
     ],
     deps = ["//src/Corrade/PluginManager:PluginManagerTestLib"],
 )
@@ -201,11 +203,11 @@ for food in [
 
 [corrade_dynamic_plugin(
     name = "%s" % food,
-    metadata_file = "food/%s.conf" % food,
+    metadata_file = CURRENT_DIR + "food/%s.conf" % food,
     subdir = "plugins/food",
     srcs = [
-        "food/%s.cpp" % food,
-        "AbstractFood.h",
+        CURRENT_DIR + "food/%s.cpp" % food,
+        CURRENT_DIR + "AbstractFood.h",
     ],
     deps = ["//src/Corrade/PluginManager:PluginManagerTestLib"],
 )
@@ -216,12 +218,12 @@ for food in [
 
 corrade_dynamic_plugin(
     name = "InitFiniDynamic",
-    metadata_file = "init-fini/InitFiniDynamic.conf",
+    metadata_file = CURRENT_DIR + "init-fini/InitFiniDynamic.conf",
     subdir = "plugins/init-fini",
     srcs = [
-        "init-fini/InitFiniDynamic.cpp",
-        "init-fini/InitFini.h",
-        "init-fini/InitFiniStatic.h",
+        CURRENT_DIR + "init-fini/InitFiniDynamic.cpp",
+        CURRENT_DIR + "init-fini/InitFini.h",
+        CURRENT_DIR + "init-fini/InitFiniStatic.h",
     ],
     deps = [
         "@corrade//:PluginManager",
@@ -231,11 +233,11 @@ corrade_dynamic_plugin(
 
 corrade_dynamic_plugin(
     name = "WrongMetadata",
-    metadata_file = "wrong-metadata/WrongMetadata.conf",
+    metadata_file = CURRENT_DIR + "wrong-metadata/WrongMetadata.conf",
     subdir = "plugins/wrong-metadata",
     srcs = [
-        "wrong-metadata/WrongMetadata.cpp",
-        "wrong-metadata/WrongMetadata.h",
+        CURRENT_DIR + "wrong-metadata/WrongMetadata.cpp",
+        CURRENT_DIR + "wrong-metadata/WrongMetadata.h",
     ],
     deps = [
         ":configure",
@@ -244,10 +246,10 @@ corrade_dynamic_plugin(
 
 [corrade_dynamic_plugin(
     name = "%s" % wrong,
-    metadata_file = "dummy.conf",
+    metadata_file = CURRENT_DIR + "dummy.conf",
     subdir = "plugins/wrong",
     srcs = [
-        "wrong/%s.cpp" % wrong,
+        CURRENT_DIR + "wrong/%s.cpp" % wrong,
     ],
 )
 for wrong in [
@@ -260,10 +262,10 @@ for wrong in [
 
 corrade_dynamic_plugin(
     name = "UnresolvedReference",
-    metadata_file = "dummy.conf",
+    metadata_file = CURRENT_DIR + "dummy.conf",
     subdir = "plugins/wrong",
     srcs = [
-        "wrong/UnresolvedReference.cpp",
+        CURRENT_DIR + "wrong/UnresolvedReference.cpp",
     ],
     deps = ["//src/Corrade/Interconnect:headers"],
 )
@@ -271,18 +273,18 @@ corrade_dynamic_plugin(
 cc_test(
     name = "PluginManagerManagerTest",
     srcs = [
-        "ManagerTest.cpp",
-        "AbstractAnimal.cpp",
-        "AbstractCustomSuffix.cpp",
-        "AbstractDeletable.cpp",
-        "AbstractDisabledMetadata.cpp",
-        "AbstractFood.cpp",
-        "AbstractAnimal.h",
-        "AbstractCustomSuffix.h",
-        "AbstractDeletable.h",
-        "AbstractDisabledMetadata.h",
-        "AbstractFood.h",
-        "wrong-metadata/WrongMetadata.h",
+        CURRENT_DIR + "ManagerTest.cpp",
+        CURRENT_DIR + "AbstractAnimal.cpp",
+        CURRENT_DIR + "AbstractCustomSuffix.cpp",
+        CURRENT_DIR + "AbstractDeletable.cpp",
+        CURRENT_DIR + "AbstractDisabledMetadata.cpp",
+        CURRENT_DIR + "AbstractFood.cpp",
+        CURRENT_DIR + "AbstractAnimal.h",
+        CURRENT_DIR + "AbstractCustomSuffix.h",
+        CURRENT_DIR + "AbstractDeletable.h",
+        CURRENT_DIR + "AbstractDisabledMetadata.h",
+        CURRENT_DIR + "AbstractFood.h",
+        CURRENT_DIR + "wrong-metadata/WrongMetadata.h",
     ],
     deps = [
         "@corrade//:TestSuite",
@@ -318,7 +320,7 @@ cc_test(
 
 cc_test(
     name = "PluginManagerManagerInitFiniTest",
-    srcs = ["ManagerInitFiniTest.cpp"],
+    srcs = [CURRENT_DIR + "ManagerInitFiniTest.cpp"],
     deps = [
         "@corrade//:TestSuite",
         "@corrade//:PluginManager",
@@ -332,9 +334,9 @@ cc_test(
 cc_test(
     name = "PluginManagerImportStaticTest",
     srcs = [
-        "ImportStaticTest.cpp",
-        "AbstractAnimal.cpp",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "ImportStaticTest.cpp",
+        CURRENT_DIR + "AbstractAnimal.cpp",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     deps = [
         "@corrade//:TestSuite",
@@ -348,9 +350,9 @@ cc_test(
 cc_test(
     name = "PluginManagerAbstractPluginTest",
     srcs = [
-        "AbstractPluginTest.cpp",
-        "AbstractAnimal.cpp",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "AbstractPluginTest.cpp",
+        CURRENT_DIR + "AbstractAnimal.cpp",
+        CURRENT_DIR + "AbstractAnimal.h",
     ],
     deps = [
         "@corrade//:TestSuite",
@@ -366,9 +368,9 @@ cc_test(
 cc_library(
     name = "PluginManagerGlobalStateAcrossLibrariesLibrary",
     srcs = [
-        "GlobalStateAcrossLibrariesLibrary.cpp",
-        "GlobalStateAcrossLibrariesLibrary.h",
-        "AbstractAnimal.h",
+        CURRENT_DIR + "GlobalStateAcrossLibrariesLibrary.cpp",
+        CURRENT_DIR + "GlobalStateAcrossLibrariesLibrary.h",
+        CURRENT_DIR + "AbstractAnimal.h",
         ":configure",
         ":Canary",
     ],

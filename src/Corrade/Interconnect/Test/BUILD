@@ -23,10 +23,11 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+CURRENT_DIR = "@corrade_src//:src/Corrade/Interconnect/Test/"
 
 [cc_test(
     name = "Interconnect%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         "@corrade//:Interconnect",
@@ -40,15 +41,15 @@ for t in [
 
 cc_library(
     name = "TestEmitterLibrary",
-    srcs = ["EmitterLibrary.cpp"],
-    hdrs = ["EmitterLibrary.h"],
+    srcs = [CURRENT_DIR + "EmitterLibrary.cpp"],
+    hdrs = [CURRENT_DIR + "EmitterLibrary.h"],
     deps = ["@corrade//:Interconnect"],
     linkstatic = True,
 )
 
 cc_test(
     name = "InterconnectLibraryTest",
-    srcs = ["LibraryTest.cpp"],
+    srcs = [CURRENT_DIR + "LibraryTest.cpp"],
     deps = [
         "@corrade//:TestSuite",
         ":TestEmitterLibrary",

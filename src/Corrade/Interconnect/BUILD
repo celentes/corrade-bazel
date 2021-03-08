@@ -25,15 +25,17 @@
 #
 package(default_visibility = ["//visibility:public"])
 
+CURRENT_DIR = "@corrade_src//:src/Corrade/Interconnect/"
+
 cc_library(
     name = "headers",
     hdrs = [
-        "Connection.h",
-        "Emitter.h",
-        "Interconnect.h",
-        "Receiver.h",
-        "StateMachine.h",
-        "visibility.h",
+        CURRENT_DIR + "Connection.h",
+        CURRENT_DIR + "Emitter.h",
+        CURRENT_DIR + "Interconnect.h",
+        CURRENT_DIR + "Receiver.h",
+        CURRENT_DIR + "StateMachine.h",
+        CURRENT_DIR + "visibility.h",
     ],
     deps = [
         "//src/Corrade/Utility:headers",
@@ -44,10 +46,10 @@ cc_library(
 cc_library(
     name = "Interconnect",
     srcs = [
-        "Connection.cpp",
-        "Emitter.cpp",
-        "Receiver.cpp",
-        "Implementation/ReceiverConnection.h",
+        CURRENT_DIR + "Connection.cpp",
+        CURRENT_DIR + "Emitter.cpp",
+        CURRENT_DIR + "Receiver.cpp",
+        CURRENT_DIR + "Implementation/ReceiverConnection.h",
     ],
     deps = [
         "@corrade//:Utility",

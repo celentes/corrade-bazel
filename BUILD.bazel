@@ -55,13 +55,17 @@ alias(
     actual = "//src/Corrade/TestSuite:TestSuite",
 )
 
+CURRENT_DIR = "@corrade_src//:"
+
 cc_library(
     name = "Main",
     hdrs = [
-        "//src/Corrade:Corrade.h",
+        CURRENT_DIR + "src/Corrade/Corrade.h",
     ],
     includes = [
         "src",
+        # just look at the level of this fuckery
+        "external/corrade_src/src"
     ],
     deps = [
         "//src/Corrade:configure",

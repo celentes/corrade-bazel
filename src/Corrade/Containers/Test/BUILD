@@ -23,9 +23,11 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+CURRENT_DIR = "@corrade_src//:src/Corrade/Containers/Test/"
+
 [cc_test(
     name = "Containers%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         "//src/Corrade/Containers:headers",
@@ -53,7 +55,7 @@
 
 [cc_test(
     name = "Containers%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         "//src/Corrade/Containers:headers",
@@ -74,7 +76,7 @@
 
 [cc_test(
     name = "Containers%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         "//src/Corrade/Containers:headers",
@@ -88,7 +90,7 @@
 
 [cc_test(
     name = "Containers%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         "//src/Corrade/Containers:headers",

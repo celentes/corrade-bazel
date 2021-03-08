@@ -25,14 +25,11 @@
 #
 load("@corrade//:index.bzl", "corrade_configure_header")
 
-exports_files([
-    "Corrade.h",
-    "Corrade.cpp",
-])
+CURRENT_DIR = "@corrade_src//:src/Corrade/"
 
 corrade_configure_header(
     name = "version",
-    src = "version.h.cmake",
+    src = CURRENT_DIR + "version.h.cmake",
     output = "version.h",
     defines = {
         # just some sample data i suppose
@@ -47,7 +44,7 @@ corrade_configure_header(
 
 corrade_configure_header(
     name = "configure",
-    src = "configure.h.cmake",
+    src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     defines = {
         "CORRADE_BUILD_DEPRECATED": "",

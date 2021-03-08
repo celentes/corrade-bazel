@@ -25,9 +25,11 @@
 #
 load("@corrade//:index.bzl", "corrade_configure_header")
 
+CURRENT_DIR = "@corrade_src//:src/Corrade/Test/"
+
 corrade_configure_header(
     name = "configure",
-    src = "configure.h.cmake",
+    src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     defines = {
         # TODO: this is selectable; also, why both?
@@ -39,7 +41,7 @@ corrade_configure_header(
 
 cc_test(
     name = "MainTest",
-    srcs = ["MainTest.cpp"],
+    srcs = [CURRENT_DIR + "MainTest.cpp"],
     args = [
         "--arg-utf",
         "hýždě",
@@ -51,7 +53,7 @@ cc_test(
 
 cc_test(
     name = "TargetTest",
-    srcs = ["TargetTest.cpp"],
+    srcs = [CURRENT_DIR + "TargetTest.cpp"],
     deps = [
         "@corrade//:TestSuite",
         ":configure",
@@ -60,13 +62,13 @@ cc_test(
 
 cc_test(
     name = "CorradeVersionTest",
-    srcs = ["VersionTest.cpp"],
+    srcs = [CURRENT_DIR + "VersionTest.cpp"],
     deps = ["@corrade//:TestSuite"],
 )
 
 cc_test(
     name = "Cpp11StandardTest",
-    srcs = ["CppStandardTest.cpp"],
+    srcs = [CURRENT_DIR + "CppStandardTest.cpp"],
     deps = ["@corrade//:TestSuite"],
     defines = ["COMPILING_AS_CPP11"],
     copts = ["-std=c++11"],
@@ -74,7 +76,7 @@ cc_test(
 
 cc_test(
     name = "Cpp14StandardTest",
-    srcs = ["CppStandardTest.cpp"],
+    srcs = [CURRENT_DIR + "CppStandardTest.cpp"],
     deps = ["@corrade//:TestSuite"],
     defines = [
         "COMPILING_AS_CPP14",
@@ -85,7 +87,7 @@ cc_test(
 
 cc_test(
     name = "Cpp14StandardTestCMakeStandard",
-    srcs = ["CppStandardTest.cpp"],
+    srcs = [CURRENT_DIR + "CppStandardTest.cpp"],
     deps = ["@corrade//:TestSuite"],
     defines = [
         "COMPILING_AS_CPP14",
@@ -97,7 +99,7 @@ cc_test(
 
 cc_test(
     name = "Cpp17StandardTestCMakeStandard",
-    srcs = ["CppStandardTest.cpp"],
+    srcs = [CURRENT_DIR + "CppStandardTest.cpp"],
     deps = ["@corrade//:TestSuite"],
     defines = ["COMPILING_AS_CPP17"],
     copts = ["-std=c++17"],
@@ -105,7 +107,7 @@ cc_test(
 
 cc_test(
     name = "Cpp2aStandardTestCMakeStandard",
-    srcs = ["CppStandardTest.cpp"],
+    srcs = [CURRENT_DIR + "CppStandardTest.cpp"],
     deps = ["@corrade//:TestSuite"],
     defines = ["COMPILING_AS_CPP2A"],
     copts = ["-std=c++2a"],

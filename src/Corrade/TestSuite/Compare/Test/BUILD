@@ -25,31 +25,33 @@
 #
 load("@corrade//:index.bzl", "corrade_configure_header")
 
+CURRENT_DIR = "@corrade_src//:src/Corrade/TestSuite/Compare/Test/"
+
 corrade_configure_header(
     name = "configure",
-    src = "configure.h.cmake",
+    src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     defines = {
-        "FILETEST_DIR": "$(rootpath FileTestFiles)",
-        "FILETEST_SAVE_DIR": "$(rootpath FileTestFiles)/write",
+        "FILETEST_DIR": "$(rootpath %sFileTestFiles)" % CURRENT_DIR,
+        "FILETEST_SAVE_DIR": "$(rootpath %sFileTestFiles)/write" % CURRENT_DIR,
     },
-    deps = ["FileTestFiles"],
+    deps = [CURRENT_DIR + "FileTestFiles"],
     local = True,
 )
 
 [cc_test(
     name = "TestSuiteCompare%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = [
         "@corrade//:TestSuite",
         ":configure",
     ],
     data = [
-        "FileTestFiles/base.txt",
-        "FileTestFiles/different.txt",
-        "FileTestFiles/empty.txt",
-        "FileTestFiles/hýždě.txt",
-        "FileTestFiles/smaller.txt",
+        CURRENT_DIR + "FileTestFiles/base.txt",
+        CURRENT_DIR + "FileTestFiles/different.txt",
+        CURRENT_DIR + "FileTestFiles/empty.txt",
+        CURRENT_DIR + "FileTestFiles/hýždě.txt",
+        CURRENT_DIR + "FileTestFiles/smaller.txt",
     ],
 )
 for t in [
@@ -60,8 +62,15 @@ for t in [
 
 [cc_test(
     name = "TestSuiteCompare%s" % t,
-    srcs = ["%s.cpp" % t],
+    srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = ["@corrade//:TestSuite"],
+    data = [
+        CURRENT_DIR + "FileTestFiles/base.txt",
+        CURRENT_DIR + "FileTestFiles/different.txt",
+        CURRENT_DIR + "FileTestFiles/empty.txt",
+        CURRENT_DIR + "FileTestFiles/hýždě.txt",
+        CURRENT_DIR + "FileTestFiles/smaller.txt",
+    ],
 )
 for t in [
     "ContainerTest",

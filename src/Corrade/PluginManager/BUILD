@@ -25,11 +25,13 @@
 #
 package(default_visibility = ["//visibility:public"])
 
+CURRENT_DIR = "@corrade_src//:src/Corrade/PluginManager/"
+
 load("@corrade//:index.bzl", "corrade_configure_header")
 
 corrade_configure_header(
     name = "configure",
-    src = "configure.h.cmake",
+    src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
     # TODO: this is selectable
     defines = {
@@ -40,13 +42,13 @@ corrade_configure_header(
 cc_library(
     name = "headers",
     hdrs = [
-        "AbstractPlugin.h",
-        "AbstractManager.h",
-        "AbstractManagingPlugin.h",
-        "Manager.h",
-        "PluginManager.h",
-        "PluginMetadata.h",
-        "visibility.h",
+        CURRENT_DIR + "AbstractPlugin.h",
+        CURRENT_DIR + "AbstractManager.h",
+        CURRENT_DIR + "AbstractManagingPlugin.h",
+        CURRENT_DIR + "Manager.h",
+        CURRENT_DIR + "PluginManager.h",
+        CURRENT_DIR + "PluginMetadata.h",
+        CURRENT_DIR + "visibility.h",
     ],
     deps = [
         "//src/Corrade/Utility:headers",
@@ -57,11 +59,11 @@ cc_library(
 cc_library(
     name = "PluginManager",
     srcs = [
-        "AbstractPlugin.cpp",
-        "PluginMetadata.cpp",
+        CURRENT_DIR + "AbstractPlugin.cpp",
+        CURRENT_DIR + "PluginMetadata.cpp",
         # GracefulAssertSrcs
-        "AbstractManager.cpp",
-        "//src/Corrade/Containers:Reference.h",
+        CURRENT_DIR + "AbstractManager.cpp",
+        "@corrade_src//:src/Corrade/Containers/Reference.h",
     ],
     deps = [
         "@corrade//:Utility",
@@ -71,7 +73,7 @@ cc_library(
 
 cc_library(
     name = "PluginManagerTestLib",
-    srcs = ["AbstractManager.cpp"],
+    srcs = [CURRENT_DIR + "AbstractManager.cpp"],
     deps = [":PluginManager"],
     defines = ["CORRADE_GRACEFUL_ASSERT"],
     visibility = ["//src/Corrade:__subpackages__"],

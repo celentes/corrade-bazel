@@ -23,37 +23,36 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-
 package(default_visibility = ["//visibility:public"])
+
+CURRENT_DIR = "@corrade_src//:src/Corrade/TestSuite/"
 
 cc_library(
     name = "TestSuite",
     srcs = [
-        "Comparator.cpp",
-        "Tester.cpp",
-        "Compare/File.cpp",
-        "Compare/FileToString.cpp",
-        "Compare/FloatingPoint.cpp",
-        "Compare/StringToFile.cpp",
-        "Implementation/BenchmarkCounters.h",
-        "Implementation/BenchmarkStats.h",
+        CURRENT_DIR + "Comparator.cpp",
+        CURRENT_DIR + "Tester.cpp",
+        CURRENT_DIR + "Compare/File.cpp",
+        CURRENT_DIR + "Compare/FileToString.cpp",
+        CURRENT_DIR + "Compare/FloatingPoint.cpp",
+        CURRENT_DIR + "Compare/StringToFile.cpp",
+        CURRENT_DIR + "Implementation/BenchmarkCounters.h",
+        CURRENT_DIR + "Implementation/BenchmarkStats.h",
     ],
     hdrs = [
-        "Comparator.h",
-        "Tester.h",
-        "TestSuite.h",
-        "visibility.h",
-        "Compare/FloatingPoint.h",
-        "Compare/Container.h",
-        "Compare/File.h",
-        "Compare/FileToString.h",
-        "Compare/Numeric.h",
-        "Compare/SortedContainer.h",
-        "Compare/StringToFile.h",
+        CURRENT_DIR + "Comparator.h",
+        CURRENT_DIR + "Tester.h",
+        CURRENT_DIR + "TestSuite.h",
+        CURRENT_DIR + "visibility.h",
+        CURRENT_DIR + "Compare/FloatingPoint.h",
+        CURRENT_DIR + "Compare/Container.h",
+        CURRENT_DIR + "Compare/File.h",
+        CURRENT_DIR + "Compare/FileToString.h",
+        CURRENT_DIR + "Compare/Numeric.h",
+        CURRENT_DIR + "Compare/SortedContainer.h",
+        CURRENT_DIR + "Compare/StringToFile.h",
     ],
     deps = [
         "@corrade//:Utility",
     ],
 )
-
-
