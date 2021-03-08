@@ -82,8 +82,7 @@ def _write_conf_impl(ctx):
     conf_content = "group=CorradeStaticPlugin_%s\n" % name
 
     out = ctx.actions.declare_file(
-        "resources_%s.conf" % name,
-        sibling = ctx.file.metadata if ctx.attr.metadata else None,
+        "resources_%s.conf" % name
     )
     retract_path = "/".join([".." for s in out.dirname.split("/")])
 
