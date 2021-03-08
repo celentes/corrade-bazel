@@ -57,3 +57,12 @@ rbe_autoconfig(
     repository = "google/rbe-ubuntu18-04",
     digest = "sha256:48b67b41118dbcdfc265e7335f454fbefa62681ab8d47200971fc7a52fb32054",
 )
+
+all_exports = """exports_files(glob(["**"], exclude_directories=0), visibility = ["//visibility:public"])"""
+http_archive(
+    name = "corrade_src",
+    url = "https://github.com/mosra/corrade/archive/6054f1b1d3f768afc226bb0f633b8216283e2158.tar.gz",
+    sha256 = "d02bee8c8c7f4249201d6a122e5efb7c69b898d1ece8a1e252416e3154035160",
+    strip_prefix = "corrade-6054f1b1d3f768afc226bb0f633b8216283e2158",
+    build_file_content = all_exports,
+)
