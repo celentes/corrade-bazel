@@ -30,16 +30,19 @@ def _compile_resource_impl(ctx):
     conf = ctx.file.conf
     name = ctx.label.name if ctx.attr.override_name == "" else ctx.attr.override_name
 
-    out_depends = ctx.actions.declare_file("resource_%s.depends" % name)
-    ctx.actions.run_shell(
-        mnemonic = "CorradeCompileDepends",
-        inputs = depset([conf]),
-        outputs = [out_depends],
-        command = "cp '{}' '{}'".format(
-            conf.path,
-            out_depends.path,
-        ),
-    )
+    outputs = []
+    if ctx.attr.generate_depends:
+      out_depends = ctx.actions.declare_file("resource_%s.depends" % name)
+      ctx.actions.run_shell(
+          mnemonic = "CorradeCompileDepends",
+          inputs = depset([conf]),
+          outputs = [out_depends],
+          command = "cp '{}' '{}'".format(
+              conf.path,
+              out_depends.path,
+          ),
+      )
+      outputs.append(out_depends)
 
     out_cpp = ctx.actions.declare_file("resource_%s.cpp" % name)
     ctx.actions.run(
@@ -54,13 +57,12 @@ def _compile_resource_impl(ctx):
         ],
         execution_requirements = {"block-network": ""},
     )
-
-    outputs = depset([out_cpp, out_depends])
+    outputs.append(out_cpp)
 
     return [
         DefaultInfo(
-            files = outputs,
-            runfiles = ctx.runfiles(transitive_files = outputs)
+            files = depset(outputs),
+            runfiles = ctx.runfiles(transitive_files = depset(outputs))
         ),
     ]
 
@@ -85,6 +87,13 @@ compile_resource = rule(
             doc = (
                 "Optional override for name argument of corrade-rc, " +
                 "default name is taken from rule name."
+            ),
+        ),
+        "generate_depends": attr.bool(
+            default = False,
+            doc = (
+                "Optionally, generate .depends file in line with CMake " +
+                "behaviour."
             ),
         ),
         "_tool": attr.label(
