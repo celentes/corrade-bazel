@@ -52,13 +52,8 @@ cc_library(
         CURRENT_DIR + "Compare/SortedContainer.h",
         CURRENT_DIR + "Compare/StringToFile.h",
     ],
-    linkopts = select({
-        "@corrade//bazel/platforms:emscripten": [
-            "-s", "DISABLE_EXCEPTION_CATCHING=0",
-        ],
-        "//conditions:default": [],
-    }),
     deps = [
         "@corrade//:Utility",
     ],
+    features = ["exceptions"],
 )
