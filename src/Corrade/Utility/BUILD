@@ -62,17 +62,34 @@ cc_library(
         CURRENT_DIR + "Utility.h",
         CURRENT_DIR + "visibility.h",
         CURRENT_DIR + "VisibilityMacros.h",
-        # TODO: this is selectable
-        CURRENT_DIR + "FileWatcher.h",
-        CURRENT_DIR + "Tweakable.h",
-        CURRENT_DIR + "TweakableParser.h",
-    ],
+    ] + select({
+        "@corrade//bazel/platforms:linux": [
+            CURRENT_DIR + "FileWatcher.h",
+            CURRENT_DIR + "Tweakable.h",
+            CURRENT_DIR + "TweakableParser.h",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         "@corrade//:Main",
         "//src/Corrade/Containers:headers",
     ],
     visibility = ["//src/Corrade:__subpackages__"]
 )
+
+GRACEFUL_ASSERT_SRCS = [
+    CURRENT_DIR + "Algorithms.cpp",
+    CURRENT_DIR + "Arguments.cpp",
+    CURRENT_DIR + "ConfigurationGroup.cpp",
+    CURRENT_DIR + "Format.cpp",
+    CURRENT_DIR + "Resource.cpp",
+    CURRENT_DIR + "Implementation/Resource.h",
+    CURRENT_DIR + "String.cpp",
+    CURRENT_DIR + "Unicode.cpp",
+    CONTAINERS_DIR + "ArrayTuple.cpp",
+    CONTAINERS_DIR + "String.cpp",
+    CONTAINERS_DIR + "StringView.cpp",
+]
 
 cc_library(
     name = "Utility",
@@ -84,50 +101,30 @@ cc_library(
         CURRENT_DIR + "MurmurHash2.cpp",
         CURRENT_DIR + "Sha1.cpp",
         CURRENT_DIR + "System.cpp",
-        # GRACEFUL ASSERT
-        CURRENT_DIR + "Algorithms.cpp",
-        CURRENT_DIR + "Arguments.cpp",
-        CURRENT_DIR + "ConfigurationGroup.cpp",
-        CURRENT_DIR + "Format.cpp",
-        CURRENT_DIR + "Resource.cpp",
-        CURRENT_DIR + "Implementation/Resource.h",
-        CURRENT_DIR + "String.cpp",
-        CURRENT_DIR + "Unicode.cpp",
-        CONTAINERS_DIR + "ArrayTuple.cpp",
-        CONTAINERS_DIR + "String.cpp",
-        CONTAINERS_DIR + "StringView.cpp",
-        # TODO: this is selectable
-        CURRENT_DIR + "FileWatcher.cpp",
-        CURRENT_DIR + "Tweakable.cpp",
-        CURRENT_DIR + "Implementation/tweakable.h",
-        CURRENT_DIR + "TweakableParser.cpp",
-    ],
-    # TODO: this is selectable
-    linkopts = ["-ldl"],
+    ] + GRACEFUL_ASSERT_SRCS + select({
+        "@corrade//bazel/platforms:linux": [
+            CURRENT_DIR + "FileWatcher.cpp",
+            CURRENT_DIR + "Tweakable.cpp",
+            CURRENT_DIR + "Implementation/tweakable.h",
+            CURRENT_DIR + "TweakableParser.cpp",
+        ],
+        "//conditions:default": [],
+    }),
+    linkopts = select({
+        "@corrade//bazel/platforms:linux": ["-ldl"],
+        "//conditions:default": [],
+    }),
     deps = [":headers"],
 )
 
 cc_library(
     name = "UtilityTestLib",
-    srcs = [
-        CURRENT_DIR + "Algorithms.cpp",
-        CURRENT_DIR + "Arguments.cpp",
-        CURRENT_DIR + "ConfigurationGroup.cpp",
-        CURRENT_DIR + "Format.cpp",
-        CURRENT_DIR + "Resource.cpp",
-        CURRENT_DIR + "Implementation/Resource.h",
-        CURRENT_DIR + "String.cpp",
-        CURRENT_DIR + "Unicode.cpp",
-        CONTAINERS_DIR + "ArrayTuple.cpp",
-        CONTAINERS_DIR + "String.cpp",
-        CONTAINERS_DIR + "StringView.cpp",
-    ],
+    srcs = GRACEFUL_ASSERT_SRCS,
     deps = [":Utility"],
     local_defines = ["CORRADE_GRACEFUL_ASSERT"],
     testonly = True,
     visibility = ["//src/Corrade:__subpackages__"],
 )
-
 
 cc_binary(
     name = "corrade-rc",
