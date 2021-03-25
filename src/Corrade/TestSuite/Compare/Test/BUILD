@@ -24,6 +24,8 @@
 #   DEALINGS IN THE SOFTWARE.
 #
 load("@corrade//:index.bzl", "corrade_configure_header")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
 
 CURRENT_DIR = "@corrade_src//:src/Corrade/TestSuite/Compare/Test/"
 
@@ -70,4 +72,24 @@ for t in [
     "SortedContainerTest",
     "FloatingPointTest",
     "NumericTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":TestSuiteCompare%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/TestSuiteCompare%s.js" % (t, t),
+  )]
+for t in [
+    "ContainerTest",
+    "SortedContainerTest",
+    "FloatingPointTest",
+    "NumericTest",
+    #"FileTest",
+    #"FileToStringTest",
+    #"StringToFileTest",
 ]]
