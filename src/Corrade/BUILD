@@ -46,13 +46,19 @@ corrade_configure_header(
     name = "configure",
     src = CURRENT_DIR + "configure.h.cmake",
     output = "configure.h",
-    defines = {
-        "CORRADE_BUILD_DEPRECATED": "",
-        #"CORRADE_BUILD_STATIC": "",
-        #"CORRADE_BUILD_STATIC_UNIQUE_GLOBALS": "",
-        "CORRADE_BUILD_MULTITHREADED": "",
-        "CORRADE_TARGET_UNIX": "",
-        #"CORRADE_PLUGINMANAGER_NO_DYNAMIC_PLUGIN_SUPPORT": "",
-    },
+    defines = select({
+      "@corrade//bazel/platforms:linux": {
+          "CORRADE_TARGET_UNIX": "",
+          "CORRADE_BUILD_DEPRECATED": "",
+          "CORRADE_BUILD_MULTITHREADED": "",
+          #"CORRADE_BUILD_STATIC_UNIQUE_GLOBALS": "",
+      },
+      "@corrade//bazel/platforms:emscripten": {
+          "CORRADE_TARGET_EMSCRIPTEN": "",
+          "CORRADE_BUILD_DEPRECATED": "",
+          "CORRADE_BUILD_STATIC": "",
+          "CORRADE_PLUGINMANAGER_NO_DYNAMIC_PLUGIN_SUPPORT": "",
+      },
+    }),
     visibility = ["//:__pkg__"]
 )
