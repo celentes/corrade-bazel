@@ -64,13 +64,6 @@ for t in [
     name = "TestSuiteCompare%s" % t,
     srcs = [CURRENT_DIR + "%s.cpp" % t],
     deps = ["@corrade//:TestSuite"],
-    data = [
-        CURRENT_DIR + "FileTestFiles/base.txt",
-        CURRENT_DIR + "FileTestFiles/different.txt",
-        CURRENT_DIR + "FileTestFiles/empty.txt",
-        CURRENT_DIR + "FileTestFiles/hýždě.txt",
-        CURRENT_DIR + "FileTestFiles/smaller.txt",
-    ],
 )
 for t in [
     "ContainerTest",
