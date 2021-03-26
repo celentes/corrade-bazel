@@ -179,6 +179,7 @@ cc_test(
         CURRENT_DIR + "DirectoryTestFilesUtf8/šňůra/dummy",
         CURRENT_DIR + "DirectoryTestFilesUtf8/hýždě",
     ],
+    tags = ["manual"],
 )
 
 # NOTE: interestingly enough, fails with UtilityTestLib linkstatic=False
