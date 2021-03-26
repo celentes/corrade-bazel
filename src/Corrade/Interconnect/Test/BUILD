@@ -23,6 +23,10 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+load("@corrade//:index.bzl", "corrade_configure_header")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
+
 CURRENT_DIR = "@corrade_src//:src/Corrade/Interconnect/Test/"
 
 [cc_test(
@@ -55,3 +59,20 @@ cc_test(
         ":TestEmitterLibrary",
     ],
 )
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":Interconnect%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/Interconnect%s.js" % (t, t),
+  )]
+for t in [
+    "Test",
+    "StateMachineTest",
+    "Benchmark",
+    "LibraryTest",
+]]
