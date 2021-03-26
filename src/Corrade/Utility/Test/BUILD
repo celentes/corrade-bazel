@@ -24,6 +24,8 @@
 #   DEALINGS IN THE SOFTWARE.
 #
 load("@corrade//:index.bzl", "corrade_configure_header", "corrade_resource")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
 
 CURRENT_DIR = "@corrade_src//:src/Corrade/Utility/Test/"
 
@@ -130,6 +132,8 @@ for t in [
     deps = ["@corrade//:TestSuite"],
     # TODO: selectable
     linkopts = ["-pthread"],
+    # this is emscripten specific feature enable
+    features = ["use_pthreads"],
 )
 for t in [
     "DebugTest",
@@ -358,3 +362,63 @@ cc_test(
     ],
     data = [CURRENT_DIR + "TweakableIntegrationTest.cpp"],
 )
+
+# TODO: "ConfigurationValueTest"
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":Utility%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/Utility%s.js" % (t, t),
+  )]
+for t in [
+    "AlgorithmsTest",
+    #"ArgumentsTest",
+    "AssertTest",
+    "AssertDisabledTest",
+    "AssertStandardDisabledTest",
+    "AssertGracefulTest",
+    "EndiannessTest",
+    "MurmurHash2Test",
+    #"ConfigurationTest",
+    # NOTE: requires pthreads
+    #"DebugTest",
+    #"MacrosTest",
+    "FormatTest",
+    "HashDigestTest",
+    "Sha1Test",
+    "StlForwardArrayTest",
+    "StlForwardStringTest",
+    "StlForwardTupleTest",
+    "StlForwardVectorTest",
+    "StlMathTest",
+    "StringTest",
+    "SystemTest",
+    "TweakableParserTest",
+    "TypeTraitsTest",
+    "UnicodeTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":Utility%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/Utility%s.js" % (t, t),
+    env = {
+        "ARGUMENTSTEST_SIZE": "1337",
+        "ARGUMENTSTEST_VERBOSE": "ON",
+        "ARGUMENTSTEST_COLOR": "OFF",
+        "ARGUMENTSTEST_UNICODE": "hýždě",
+    },
+  )]
+for t in [
+    "ArgumentsTest",
+]]
