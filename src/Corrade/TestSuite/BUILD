@@ -55,5 +55,9 @@ cc_library(
     deps = [
         "@corrade//:Utility",
     ],
+    linkopts = select({
+        "@corrade//bazel/platforms:emscripten": ["-s", "DISABLE_EXCEPTION_CATCHING=0"],
+        "//conditions:default": [],
+    }),
     features = ["exceptions"],
 )
