@@ -24,6 +24,8 @@
 #   DEALINGS IN THE SOFTWARE.
 #
 load("@corrade//:index.bzl", "corrade_configure_header")
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
 
 CURRENT_DIR = "@corrade_src//:src/Corrade/TestSuite/Test/"
 
@@ -124,4 +126,39 @@ for t in [
     # Bazel doesn't know how to expect failing tests
     # TODO: find a way to fix/wrap?
     #"FailingTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":TestSuite%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/TestSuite%s.js" % (t, t),
+  )]
+for t in [
+    "ComparatorTest",
+    "BenchmarkStatsTest",
+    #"TesterTest",
+    #"BundledFilesTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":TestSuite%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/TestSuite%s.js" % (t, t),
+    args = [
+        "--arguments-value",
+        "hello",
+    ],
+  )]
+for t in [
+    "ArgumentsTest",
 ]]
