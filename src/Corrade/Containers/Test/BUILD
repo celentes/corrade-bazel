@@ -23,6 +23,9 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
+load("@emsdk//emscripten_toolchain:wasm_rules.bzl", "wasm_cc_binary")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test")
+
 CURRENT_DIR = "@corrade_src//:src/Corrade/Containers/Test/"
 
 [cc_test(
@@ -32,6 +35,7 @@ CURRENT_DIR = "@corrade_src//:src/Corrade/Containers/Test/"
         "@corrade//:TestSuite",
         "//src/Corrade/Containers:headers",
     ],
+    copts = ["-std=c++20"],
 ) for t in [
     "ArrayStlSpanTest",
     "ArrayViewStlSpanTest",
@@ -98,4 +102,48 @@ CURRENT_DIR = "@corrade_src//:src/Corrade/Containers/Test/"
     ],
 ) for t in [
     "ArrayTupleTest",
+]]
+
+[[wasm_cc_binary(
+    name = "%s_wasm" % t,
+    cc_target = ":Containers%s" % t,
+    testonly = True,
+  ),
+  nodejs_test(
+    name = "Emscripten_%s" % t,
+    data = [":%s_wasm" % t],
+    entry_point = ":%s_wasm/Containers%s.js" % (t, t),
+  )]
+for t in [
+    "ArrayStlSpanTest",
+    "ArrayViewStlSpanTest",
+    "EnumSetTest",
+    "OptionalStlTest",
+    "PointerStlTest",
+    "RawForwardListTest",
+    "ReferenceStlTest",
+    "ScopeGuardTest",
+    "SequenceHelpersTest",
+    "StaticArrayTest",
+    "StringStlTest",
+    "StringViewStlTest",
+    "TagsTest",
+    "LinkedListTest",
+    "ArrayTest",
+    "ArrayViewStlTest",
+    "ArrayViewTest",
+    "OptionalTest",
+    "GrowableArrayTest",
+    "BigEnumSetTest",
+    "PointerTest",
+    "StaticArrayViewTest",
+    "StridedArrayViewTest",
+    "StringTest",
+    "StringViewTest",
+    "ArrayTupleTest",
+    "GrowableArraySanitizerFailTest",
+    "ReferenceTest",
+    "StaticArrayStlSpanTest",
+    "StaticArrayViewStlSpanTest",
+    "StaticArrayViewStlTest",
 ]]
