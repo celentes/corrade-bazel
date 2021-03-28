@@ -23,49 +23,15 @@
 #   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 #   DEALINGS IN THE SOFTWARE.
 #
-package(default_visibility = ["//visibility:public"])
-
-alias(
-    name = "corrade-rc",
-    actual = "//src/Corrade/Utility:corrade-rc",
+exports_files(
+    glob(["**"], exclude_directories=0),
+    visibility = ["//visibility:public"],
 )
-
-alias(
-    name = "Containers",
-    actual = "//src/Corrade/Containers:Containers",
-)
-
-alias(
-    name = "Utility",
-    actual = "//src/Corrade/Utility:Utility",
-)
-
-alias(
-    name = "Interconnect",
-    actual = "//src/Corrade/Interconnect:Interconnect",
-)
-
-alias(
-    name = "PluginManager",
-    actual = "//src/Corrade/PluginManager:PluginManager",
-)
-
-alias(
-    name = "TestSuite",
-    actual = "//src/Corrade/TestSuite:TestSuite",
-)
-
-CURRENT_DIR = "@corrade_src//:"
 
 cc_library(
-    name = "Main",
-    hdrs = [
-        CURRENT_DIR + "src/Corrade/Corrade.h",
-    ],
+    name = "include_paths",
     includes = ["src"],
-    deps = [
-        "//src/Corrade:configure",
-        "//src/Corrade:version",
-        "@corrade_src//:include_paths",
-    ],
+    visibility = ["//visibility:public"],
 )
+
+

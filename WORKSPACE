@@ -64,13 +64,13 @@ rbe_autoconfig(
     digest = "sha256:48b67b41118dbcdfc265e7335f454fbefa62681ab8d47200971fc7a52fb32054",
 )
 
-all_exports = """exports_files(glob(["**"], exclude_directories=0), visibility = ["//visibility:public"])"""
+# TODO: move out to deps
 http_archive(
     name = "corrade_src",
     url = "https://github.com/mosra/corrade/archive/34088a44d0e301626974d5bed3a1c7326ede12c0.tar.gz",
     sha256 = "6948981fd6da2648289c03fcfed3e072cbb5a7c50e06051a5d09b648a86477ff",
     strip_prefix = "corrade-34088a44d0e301626974d5bed3a1c7326ede12c0",
-    build_file_content = all_exports,
+    build_file = "@corrade//:BUILD.corrade",
 )
 
 http_archive(
