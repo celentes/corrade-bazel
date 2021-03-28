@@ -67,9 +67,9 @@ rbe_autoconfig(
 all_exports = """exports_files(glob(["**"], exclude_directories=0), visibility = ["//visibility:public"])"""
 http_archive(
     name = "corrade_src",
-    url = "https://github.com/mosra/corrade/archive/6054f1b1d3f768afc226bb0f633b8216283e2158.tar.gz",
-    sha256 = "d02bee8c8c7f4249201d6a122e5efb7c69b898d1ece8a1e252416e3154035160",
-    strip_prefix = "corrade-6054f1b1d3f768afc226bb0f633b8216283e2158",
+    url = "https://github.com/mosra/corrade/archive/34088a44d0e301626974d5bed3a1c7326ede12c0.tar.gz",
+    sha256 = "6948981fd6da2648289c03fcfed3e072cbb5a7c50e06051a5d09b648a86477ff",
+    strip_prefix = "corrade-34088a44d0e301626974d5bed3a1c7326ede12c0",
     build_file_content = all_exports,
 )
 
