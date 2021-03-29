@@ -38,12 +38,6 @@ http_archive(
     ],
 )
 
-http_archive(
-    name = "build_bazel_rules_nodejs",
-    sha256 = "dd7ea7efda7655c218ca707f55c3e1b9c68055a70c31a98f264b3445bc8f4cb1",
-    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/3.2.3/rules_nodejs-3.2.3.tar.gz"],
-)
-
 load("@bazel_toolchains//rules:rbe_repo.bzl", "rbe_autoconfig")
 rbe_autoconfig(
     name = "rbe_ubuntu1804",
@@ -64,14 +58,8 @@ rbe_autoconfig(
     digest = "sha256:48b67b41118dbcdfc265e7335f454fbefa62681ab8d47200971fc7a52fb32054",
 )
 
-# TODO: move out to deps
-http_archive(
-    name = "corrade_src",
-    url = "https://github.com/mosra/corrade/archive/34088a44d0e301626974d5bed3a1c7326ede12c0.tar.gz",
-    sha256 = "6948981fd6da2648289c03fcfed3e072cbb5a7c50e06051a5d09b648a86477ff",
-    strip_prefix = "corrade-34088a44d0e301626974d5bed3a1c7326ede12c0",
-    build_file = "@corrade//:BUILD.corrade",
-)
+load(":deps.bzl", "deps")
+deps()
 
 http_archive(
     name = "emsdk",
