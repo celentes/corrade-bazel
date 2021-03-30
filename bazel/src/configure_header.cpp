@@ -55,9 +55,11 @@ bool substitute(
 bool define(std::string& in, const std::string& what) {
   std::string cmakedefine = "#cmakedefine ";
   cmakedefine += what;
+  cmakedefine += " ";
 
   std::string with = "#define ";
   with += what;
+  with += " ";
 
   return substitute(in, cmakedefine, with);
 }
