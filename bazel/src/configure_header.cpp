@@ -52,16 +52,18 @@ bool substitute(
   return success;
 }
 
-bool define(std::string& in, const std::string& what) {
+void define(std::string& in, const std::string& what) {
   std::string cmakedefine = "#cmakedefine ";
   cmakedefine += what;
-  cmakedefine += " ";
+
+  std::regex re_eol(cmakedefine + "$");
+  std::regex re_eow(cmakedefine + " ");
 
   std::string with = "#define ";
   with += what;
-  with += " ";
 
-  return substitute(in, cmakedefine, with);
+  in = std::regex_replace(in, re_eol, with);
+  in = std::regex_replace(in, re_eow, with + " ");
 }
 
 bool strip(std::string& in) {
