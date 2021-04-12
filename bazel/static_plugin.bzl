@@ -66,7 +66,7 @@ def static_plugin(name, metadata_file = None, resources = [], **kwargs):
 
     native.cc_library(
         name = name,
-        copts = copts + ["-std=c++11"],
+        copts = ["-std=c++11"] + copts,
         linkstatic = True,
         alwayslink = alwayslink,
         srcs = srcs + [":%s" % resource],
